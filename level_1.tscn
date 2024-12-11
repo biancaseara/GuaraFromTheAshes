@@ -1,0 +1,62 @@
+[gd_scene load_steps=11 format=3 uid="uid://bqv2816h2ot6t"]
+
+[ext_resource type="Script" path="res://level_1.gd" id="1_5fify"]
+[ext_resource type="PackedScene" uid="uid://bqwo5xgg536al" path="res://lucas.tscn" id="1_f823b"]
+[ext_resource type="PackedScene" uid="uid://cowmesqefgphp" path="res://food.tscn" id="3_67ej6"]
+[ext_resource type="PackedScene" uid="uid://btffxcaafrg58" path="res://enemy.tscn" id="4_xgw5g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xjhwa"]
+albedo_color = Color(0, 0.410493, 0.110783, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h78ja"]
+material = SubResource("StandardMaterial3D_xjhwa")
+size = Vector3(100, 0.5, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_15dan"]
+size = Vector3(100, 0.5, 100)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_124xg"]
+sky_top_color = Color(0.384314, 0.454902, 0.823529, 1)
+sky_horizon_color = Color(0.86328, 0.7128, 0.88, 1)
+sky_curve = 0.0265165
+ground_bottom_color = Color(0.0523289, 0.0391344, 0.0255539, 1)
+ground_horizon_color = Color(0.862745, 0.713726, 0.878431, 1)
+ground_curve = 0.0386375
+
+[sub_resource type="Sky" id="Sky_5x8jd"]
+sky_material = SubResource("ProceduralSkyMaterial_124xg")
+
+[sub_resource type="Environment" id="Environment_1a40t"]
+background_mode = 2
+sky = SubResource("Sky_5x8jd")
+
+[node name="Level1" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.043525, 4.26845, -1.57272)
+script = ExtResource("1_5fify")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.444693, 0)
+collision_layer = 2
+collision_mask = 13
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_h78ja")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_15dan")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.54635, 0.837018, -0.0300345, -0.515622, -0.307873, 0.799593, 0.660027, 0.452344, 0.599792, -0.767234, 6.63312, -3.18697)
+shadow_enabled = true
+
+[node name="Lucas" parent="." instance=ExtResource("1_f823b")]
+
+[node name="Food" parent="." instance=ExtResource("3_67ej6")]
+transform = Transform3D(-0.00194415, -0.101888, 0.994794, -0.981516, -0.190183, -0.0213971, 0.191373, -0.976448, -0.0996352, 0.183637, 0.59149, 5.87525)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1a40t")
+
+[node name="Enemy" parent="." instance=ExtResource("4_xgw5g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.40401, 0.631731, -0.0348454)
